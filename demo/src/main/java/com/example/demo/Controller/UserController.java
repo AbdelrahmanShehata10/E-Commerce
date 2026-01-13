@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Controller.AuthenticationResponse;
 import com.example.demo.DTO.Register_DTO;
+import com.example.demo.DTO.UserUpdateDTO;
 import com.example.demo.DTO.change_password_req;
 import com.example.demo.DTO.login_DTO;
 import com.example.demo.Models.User;
@@ -41,8 +42,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(name = "id") int id,
-                                           @RequestBody User update) {
+    public ResponseEntity<User> updateUser(@PathVariable int id,
+                                           @RequestBody UserUpdateDTO update) {
         return userService.updateUser(id, update);
     }
 
