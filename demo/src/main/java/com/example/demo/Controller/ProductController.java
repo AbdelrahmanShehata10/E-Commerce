@@ -49,7 +49,7 @@ public class ProductController {
 
     // ==================== ADMIN ONLY ENDPOINTS ====================
 
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         return productService.AddProduct(product);

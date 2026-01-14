@@ -34,6 +34,9 @@ public class UserController {
     @PostMapping("/register")
     public AuthenticationResponse createUser(@RequestBody Register_DTO userData) {
         return userService.registerUser(userData);
+    }  @PostMapping("/registerAdmin")
+    public AuthenticationResponse createAdminUser(@RequestBody Register_DTO userData) {
+        return userService.registerAdminUser(userData);
     }
 
     @PostMapping("/login")

@@ -90,6 +90,51 @@ public class UserService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
+    public AuthenticationResponse registerAdminUser(Register_DTO userData) {
+
+
+        if (urepo.findByUsername(userData.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
+
+        if (urepo.findByEmail(userData.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+
+        if (!isValidEmail(userData.getEmail())) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+
+
+        if (userData.getPassword() == null || userData.getPassword().length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters long");
+        }
+
+
+        if (userData.getUsername() == null || userData.getUsername().trim().isEmpty()) {
+            throw new IllegalArgumentException("Username is required");
+        }
+
+        if (userData.getEmail() == null || userData.getEmail().trim().isEmpty()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+
+
+        User user = new User();
+        user.setUsername(userData.getUsername().trim());
+        user.setEmail(userData.getEmail().trim().toLowerCase());
+        user.setPassword(passwordEncoder.encode(userData.getPassword()));
+        user.setAge(userData.getAge());
+
+        user.setRole(Role.ADMIN);
+
+        urepo.save(user);
+
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
+    }
 
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";

@@ -14,6 +14,8 @@ import lombok.Data;
         private String age;
         private String email;
         private String password;
+        private String gender;
+
 
     }
 
